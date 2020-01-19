@@ -28,15 +28,18 @@ while(True):
         y = int(y - h / 6)
         w += int(w / 6)
         h += int(h / 6)
-        cv2.rectangle(frame,(x,y),(x+w,y+h),(255,0,0),2)
         roi_gray = gray[y:y+h, x:x+w]
         roi_color = rgb[y:y+h, x:x+w]
+        cv2.rectangle(rgb, (x,y), (x+w,y+h), (255, 0, 0), 2 )
         print(roi_color.shape)
     if count > 1:
         for d in range(int(Dif)):
             cv2.putText(frame, "|" % Dif, (10+d, 10),
-                       cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (255,255,255))
-    cv2.imshow('win', frame)
+                       cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (255, 255, 255))
+    cv2.imshow('frame', cv2.cvtColor(rgb, cv2.COLOR_RGB2BGR))
+    cv2.moveWindow('frame', 0, 0)
+    cv2.imshow('face', cv2.cvtColor(roi_color, cv2.COLOR_RGB2BGR))
+    cv2.moveWindow('face', 640, 0)
     gray_prev = gray.copy()
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
